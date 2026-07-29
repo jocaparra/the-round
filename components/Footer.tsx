@@ -11,15 +11,15 @@ export default function Footer() {
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-10 lg:gap-12 pb-12 border-b border-[#F7F2EC]/10">
-          {/* Column 1: Brand & Positioning (4 cols) */}
+          {/* Column 1: Brand & Positioning (5 cols) */}
           <div className="md:col-span-5 space-y-4">
-            <Link href="/" className="inline-block">
+            <a href="#" className="inline-block">
               <span className="font-['Plus_Jakarta_Sans'] font-extrabold text-3xl tracking-tight text-[#F7F2EC]">
                 the round
               </span>
-            </Link>
+            </a>
             <p className="text-sm text-[#D4C7BB]/80 leading-relaxed max-w-md">
-              Jornal digital brasileiro independente sobre startups de alto crescimento, venture capital e economia de tecnologia. Jornalismo rigoroso, cético por padrão, sem releases corporativos.
+              Jornal digital brasileiro sobre startups de alto crescimento, venture capital e o ecossistema de tecnologia. Cobertura cética por padrão, sem releases corporativos.
             </p>
             <div className="flex items-center space-x-3 pt-2">
               <a
@@ -35,59 +35,59 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Column 2: Seções (2 cols) */}
+          {/* Column 2: Navegação Institucional (2 cols) */}
           <div className="md:col-span-2 space-y-3">
             <h4 className="text-xs font-bold uppercase tracking-wider text-[#C77B3F]">
-              Seções
+              Navegação
             </h4>
             <ul className="space-y-2 text-sm text-[#D4C7BB]/80">
               <li>
-                <Link href="/categoria/rodadas" className="hover:text-[#F7F2EC] transition-colors">
-                  Rodadas & M&A
-                </Link>
+                <a href="#sobre" className="hover:text-[#F7F2EC] transition-colors">
+                  O Jornal
+                </a>
               </li>
               <li>
-                <Link href="/categoria/fundos" className="hover:text-[#F7F2EC] transition-colors">
-                  Fundos de VC
-                </Link>
+                <a href="#escopo" className="hover:text-[#F7F2EC] transition-colors">
+                  O Que Cobrimos
+                </a>
               </li>
               <li>
-                <Link href="/categoria/perfis" className="hover:text-[#F7F2EC] transition-colors">
-                  Perfis de Founders
-                </Link>
+                <a href="#linha-editorial" className="hover:text-[#F7F2EC] transition-colors">
+                  Como Trabalhamos
+                </a>
               </li>
               <li>
-                <Link href="/categoria/analises" className="hover:text-[#F7F2EC] transition-colors">
-                  Análises & Investigação
-                </Link>
+                <a href="#equipe" className="hover:text-[#F7F2EC] transition-colors">
+                  Redação
+                </a>
               </li>
               <li>
-                <Link href="/sobre" className="hover:text-[#F7F2EC] transition-colors">
-                  Manifesto Editorial
-                </Link>
+                <a href="#newsletter" className="hover:text-[#F7F2EC] transition-colors">
+                  Newsletter
+                </a>
               </li>
             </ul>
           </div>
 
-          {/* Column 3: Redação & Pautas (2 cols) */}
+          {/* Column 3: Redação & Contato (2 cols) */}
           <div className="md:col-span-2 space-y-3">
             <h4 className="text-xs font-bold uppercase tracking-wider text-[#C77B3F]">
-              Redação
+              Contato
             </h4>
             <ul className="space-y-2 text-sm text-[#D4C7BB]/80">
               <li>
-                <Link href="/sobre#equipe" className="hover:text-[#F7F2EC] transition-colors">
-                  Equipe Editorial
-                </Link>
+                <a href="mailto:redacao@theround.com.br" className="hover:text-[#F7F2EC] transition-colors">
+                  redacao@theround.com.br
+                </a>
               </li>
               <li>
-                <a href="mailto:redacao@theround.com.br" className="hover:text-[#F7F2EC] transition-colors">
+                <a href="mailto:pautas@theround.com.br" className="hover:text-[#F7F2EC] transition-colors">
                   Envie uma Pauta
                 </a>
               </li>
               <li>
                 <a
-                  href="/sobre#vazamentos"
+                  href="#vazamentos"
                   className="inline-flex items-center space-x-1 text-[#D49B5E] hover:underline"
                 >
                   <Lock className="w-3 h-3 text-[#C77B3F]" />
@@ -100,16 +100,16 @@ export default function Footer() {
           {/* Column 4: Newsletter Fast Signup (3 cols) */}
           <div className="md:col-span-3 space-y-3">
             <h4 className="text-xs font-bold uppercase tracking-wider text-[#C77B3F]">
-              Newsletter Semanal
+              Newsletter
             </h4>
             <p className="text-xs text-[#D4C7BB]/80 leading-relaxed">
-              O briefing essencial da Faria Lima e dos ecossistemas de tecnologia do país.
+              O briefing quinzenal e semanal que a Faria Lima e os founders leem antes de abrir o mercado.
             </p>
             <a
               href="#newsletter"
               className="inline-block text-xs font-bold text-[#F7F2EC] bg-[#C77B3F] hover:bg-[#B06930] px-4 py-2.5 rounded-lg transition-colors w-full text-center"
             >
-              Assinar Gratuitamente
+              Assinar Newsletter
             </a>
           </div>
         </div>
@@ -118,7 +118,7 @@ export default function Footer() {
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-[#D4C7BB]/50 gap-4">
           <p>© {new Date().getFullYear()} The Round Mídia & Jornalismo Ltda. Todos os direitos reservados.</p>
           <p className="text-center sm:text-right max-w-md">
-            Veículo independente. O The Round não comercializa análises pagas nem possui vínculo de capital com fundos de venture capital.
+            Veículo de jornalismo independente. O The Round não comercializa análises pagas nem possui vínculo de capital com fundos de venture capital.
           </p>
         </div>
       </div>

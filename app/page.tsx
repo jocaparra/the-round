@@ -1,28 +1,79 @@
-import React from "react";
-import Link from "next/link";
-import { ARTICLES } from "@/data/articles";
+"use client";
+
+import React, { useState } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import ArticleCard from "@/components/ArticleCard";
-import NewsletterBlock from "@/components/NewsletterBlock";
 import ConcentricArcs from "@/components/ConcentricArcs";
 import LinkedInIcon from "@/components/LinkedInIcon";
-import { ArrowRight, ArrowUpRight, ShieldCheck, CheckCircle, Flame, Building2 } from "lucide-react";
+import {
+  ArrowRight,
+  ArrowUpRight,
+  ShieldCheck,
+  CheckCircle2,
+  Lock,
+  Mail,
+  Building2,
+  TrendingUp,
+  FileText,
+  Users,
+  Award,
+  Star,
+} from "lucide-react";
 
-export default function InstitutionalHomePage() {
-  // Pull 3 curated articles for the Home highlight section
-  const curatedArticles = ARTICLES.slice(0, 3);
+export default function SinglePageHome() {
+  const [email, setEmail] = useState("");
+  const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  const handleNewsletterSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email || !email.includes("@")) return;
+
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+      setSubmitted(true);
+      setEmail("");
+    }, 800);
+  };
+
+  const teamMembers = [
+    {
+      name: "Rodrigo Mendonça",
+      role: "Editor-Chefe & Co-fundador",
+      bio: "Ex-Valor Econômico e Ex-Bloomberg. Cobertura de venture capital e private equity há mais de 10 anos.",
+      avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80",
+    },
+    {
+      name: "Guilherme Siqueira",
+      role: "Editor de Investigações & M&A",
+      bio: "Especialista em unit economics, direito societário e reestruturações de cap tables complexos.",
+      avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80",
+    },
+    {
+      name: "Camila Paes",
+      role: "Repórter Especial de Perfis",
+      bio: "Dedicada a contar a história real dos founders antes e depois da captação de cheques institucionais.",
+      avatar: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=400&q=80",
+    },
+    {
+      name: "Lucas Vasconcelos",
+      role: "Analista de Dados & Infografia",
+      bio: "Responsável por mapear a liquidez real de fundos de VC e múltiplos de valuation na América Latina.",
+      avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=400&q=80",
+    },
+  ];
 
   return (
     <div className="min-h-screen flex flex-col bg-[#FAFAF8] text-[#1A1210]">
       <Header />
 
-      {/* 1. HERO INSTITUCIONAL (Scroll Único, Estilo Canastra/Canary) */}
+      {/* 1. HERO INSTITUCIONAL (Inspirado no estilo Canary / Canastra) */}
       <section className="relative bg-gradient-to-br from-[#4C0F16] via-[#3B0B11] to-[#5A1119] text-[#F7F2EC] pt-32 sm:pt-40 pb-20 sm:pb-28 px-4 sm:px-6 lg:px-8 border-b border-[#F7F2EC]/10 overflow-hidden">
         <ConcentricArcs opacity={0.16} center="top-right" />
 
         <div className="relative z-10 max-w-5xl mx-auto space-y-8 text-center sm:text-left">
-          {/* Badge Tagline */}
+          {/* Top Tagline Badge */}
           <div className="inline-flex items-center space-x-2 bg-[#3B0B11]/90 text-[#D49B5E] border border-[#F7F2EC]/15 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest">
             <span className="w-2 h-2 rounded-full bg-[#C77B3F] animate-pulse" />
             <span>Jornal Digital Independente</span>
@@ -41,20 +92,20 @@ export default function InstitutionalHomePage() {
 
           {/* Primary Action Buttons */}
           <div className="flex flex-col sm:flex-row items-center space-y-3 sm:space-y-0 sm:space-x-4 pt-4">
-            <Link
-              href="/noticias"
+            <a
+              href="#newsletter"
               className="w-full sm:w-auto font-['Plus_Jakarta_Sans'] font-bold text-base text-[#F7F2EC] bg-[#C77B3F] hover:bg-[#B06930] px-8 py-4 rounded-xl transition-all shadow-lg flex items-center justify-center space-x-2 group"
             >
-              <span>Explorar Matérias Recentes</span>
+              <span>Assinar Newsletter</span>
               <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-            </Link>
+            </a>
 
-            <Link
-              href="/sobre"
+            <a
+              href="#sobre"
               className="w-full sm:w-auto font-['Plus_Jakarta_Sans'] font-semibold text-sm text-[#F7F2EC]/90 hover:text-[#F7F2EC] bg-[#3B0B11]/80 hover:bg-[#3B0B11] border border-[#F7F2EC]/20 px-6 py-4 rounded-xl transition-all text-center"
             >
-              Conheça o Manifesto
-            </Link>
+              Conheça o Jornal
+            </a>
           </div>
         </div>
       </section>
@@ -98,115 +149,128 @@ export default function InstitutionalHomePage() {
         </div>
       </section>
 
-      {/* 3. BLOCO "O QUE COBRIMOS" (Texto Conciso, Sem Cards) */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto w-full space-y-12">
+      {/* 3. SEÇÃO: O QUE É O THE ROUND (#sobre) */}
+      <section id="sobre" className="py-20 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto w-full space-y-12">
         <div className="space-y-3">
           <span className="text-xs font-bold uppercase tracking-widest text-[#C77B3F]">
-            Escopo Editorial
+            Posicionamento Institucional
           </span>
-          <h2 className="font-['Plus_Jakarta_Sans'] font-extrabold text-3xl sm:text-4xl text-[#1A1210]">
-            O Que o The Round Cobre
+          <h2 className="font-['Plus_Jakarta_Sans'] font-extrabold text-3xl sm:text-5xl text-[#1A1210]">
+            Growth story, não victory lap.
           </h2>
-          <p className="text-base text-[#574F4B] max-w-2xl">
-            Sem cobertura corporativa genérica. Nossa equipe concentra apuração exclusiva em quatro frentes do ecossistema nacional:
+          <p className="text-lg text-[#574F4B] leading-relaxed">
+            Não somos um fundo de venture capital nem uma agência de relações públicas. O <strong>The Round</strong> é o hub jornalístico criado para cobrir a economia real de tecnologia no Brasil com a sobriedade e o ceticismo profissional que o mercado maduro exige.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 border-t border-[#1A1210]/10 pt-8">
-          <div className="space-y-2">
-            <span className="text-xs font-bold text-[#4C0F16] uppercase tracking-wider block">
-              01. Rodadas & M&A
-            </span>
-            <h3 className="font-['Plus_Jakarta_Sans'] font-bold text-xl text-[#1A1210]">
-              Aportes de Estágio Intermediário e Fusões
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 border-t border-[#1A1210]/10 pt-8">
+          <div className="p-6 bg-white rounded-2xl border border-[#1A1210]/10 shadow-sm space-y-3">
+            <div className="w-10 h-10 rounded-xl bg-[#4C0F16] text-[#F7F2EC] flex items-center justify-center font-bold">
+              01
+            </div>
+            <h3 className="font-['Plus_Jakarta_Sans'] font-bold text-xl text-[#4C0F16]">
+              Cético por Padrão
             </h3>
             <p className="text-sm text-[#574F4B] leading-relaxed">
-              Análise de captações de Série A, B e C com termos reais de valuation, múltiplos de ARR, proteções de liquidação e governança pós-aporte.
+              Questionamos narrativas ufanistas. Todo dado citado no The Round é checado contra métricas operacionais e fontes cruzadas.
             </p>
           </div>
 
-          <div className="space-y-2">
-            <span className="text-xs font-bold text-[#4C0F16] uppercase tracking-wider block">
-              02. Fundos de Venture Capital
-            </span>
-            <h3 className="font-['Plus_Jakarta_Sans'] font-bold text-xl text-[#1A1210]">
-              Teses de Alocação e Desdobramento de Capital
+          <div className="p-6 bg-white rounded-2xl border border-[#1A1210]/10 shadow-sm space-y-3">
+            <div className="w-10 h-10 rounded-xl bg-[#4C0F16] text-[#F7F2EC] flex items-center justify-center font-bold">
+              02
+            </div>
+            <h3 className="font-['Plus_Jakarta_Sans'] font-bold text-xl text-[#4C0F16]">
+              Independência de Capital
             </h3>
             <p className="text-sm text-[#574F4B] leading-relaxed">
-              Mapeamento do <i>dry powder</i> acumulado, dinâmicas de chamadas de capital com LPs e taxas de distribuição de retornos (DPI/TVPI).
+              Não vendemos matérias pagas nem temos participação em fundos de VC. Nossa fidelidade é com a precisão dos fatos.
             </p>
           </div>
 
-          <div className="space-y-2">
-            <span className="text-xs font-bold text-[#4C0F16] uppercase tracking-wider block">
-              03. Perfis de Founders
-            </span>
-            <h3 className="font-['Plus_Jakarta_Sans'] font-bold text-xl text-[#1A1210]">
-              A Operação Real dos Empreendedores
+          <div className="p-6 bg-white rounded-2xl border border-[#1A1210]/10 shadow-sm space-y-3">
+            <div className="w-10 h-10 rounded-xl bg-[#4C0F16] text-[#F7F2EC] flex items-center justify-center font-bold">
+              03
+            </div>
+            <h3 className="font-['Plus_Jakarta_Sans'] font-bold text-xl text-[#4C0F16]">
+              Foco em Unit Economics
             </h3>
             <p className="text-sm text-[#574F4B] leading-relaxed">
-              Entrevistas aprofundadas com os fundadores à frente de scale-ups brasileiras. O estilo de gestão, a construção do time e os momentos de quase falência.
-            </p>
-          </div>
-
-          <div className="space-y-2">
-            <span className="text-xs font-bold text-[#4C0F16] uppercase tracking-wider block">
-              04. Análises & Investigação
-            </span>
-            <h3 className="font-['Plus_Jakarta_Sans'] font-bold text-xl text-[#1A1210]">
-              Unit Economics e Reestruturações
-            </h3>
-            <p className="text-sm text-[#574F4B] leading-relaxed">
-              Investigações sobre downrounds silenciosos, inadimplência em fintechs B2B e o impacto das oscilações macroeconômicas na eficiência das startups.
+              Valuation é vaidade, margem é sanidade. Investigamos a eficiência operacional das empresas além do valor teórico dos aportes.
             </p>
           </div>
         </div>
       </section>
 
-      {/* 4. BLOCO "ÚLTIMAS MATÉRIAS" (Curado, Exatamente 3 Cards + CTA para Notícias) */}
-      <section className="bg-[#F3F1EC] py-20 px-4 sm:px-6 lg:px-8 border-t border-b border-[#1A1210]/10">
-        <div className="max-w-7xl mx-auto space-y-12">
-          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
-            <div className="space-y-2">
-              <span className="text-xs font-bold uppercase tracking-widest text-[#C77B3F] flex items-center gap-1.5">
-                <Flame className="w-4 h-4 text-[#C77B3F]" />
-                <span>Arquivo Recente</span>
+      {/* 4. SEÇÃO: O QUE COBRIMOS (#escopo) */}
+      <section id="escopo" className="py-20 px-4 sm:px-6 lg:px-8 bg-[#F3F1EC] border-t border-b border-[#1A1210]/10">
+        <div className="max-w-6xl mx-auto space-y-12">
+          <div className="space-y-3">
+            <span className="text-xs font-bold uppercase tracking-widest text-[#C77B3F]">
+              Escopo Editorial
+            </span>
+            <h2 className="font-['Plus_Jakarta_Sans'] font-extrabold text-3xl sm:text-4xl text-[#1A1210]">
+              O Que Cobrimos
+            </h2>
+            <p className="text-base text-[#574F4B] max-w-2xl">
+              Nossa equipe concentra apuração exclusiva em quatro frentes estruturais do ecossistema de tecnologia:
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="bg-white p-8 rounded-2xl border border-[#1A1210]/10 space-y-3 shadow-sm">
+              <span className="text-xs font-bold text-[#4C0F16] uppercase tracking-wider block">
+                01. Rodadas & M&A
               </span>
-              <h2 className="font-['Plus_Jakarta_Sans'] font-extrabold text-3xl sm:text-4xl text-[#1A1210]">
-                Últimas Matérias Publicadas
-              </h2>
+              <h3 className="font-['Plus_Jakarta_Sans'] font-bold text-xl text-[#1A1210]">
+                Aportes de Estágio Intermediário e Fusões
+              </h3>
+              <p className="text-sm text-[#574F4B] leading-relaxed">
+                Análise detalhada de captações de Série A, B e C com termos reais de valuation, múltiplos de ARR, proteções de liquidação preferencial e governança pós-aporte.
+              </p>
             </div>
 
-            <Link
-              href="/noticias"
-              className="inline-flex items-center space-x-2 text-sm font-bold text-[#4C0F16] hover:text-[#C77B3F] transition-colors"
-            >
-              <span>Ver todas as notícias na aba dedicada</span>
-              <ArrowRight className="w-4 h-4" />
-            </Link>
-          </div>
+            <div className="bg-white p-8 rounded-2xl border border-[#1A1210]/10 space-y-3 shadow-sm">
+              <span className="text-xs font-bold text-[#4C0F16] uppercase tracking-wider block">
+                02. Fundos de Venture Capital
+              </span>
+              <h3 className="font-['Plus_Jakarta_Sans'] font-bold text-xl text-[#1A1210]">
+                Teses de Alocação e Desdobramento de Capital
+              </h3>
+              <p className="text-sm text-[#574F4B] leading-relaxed">
+                Mapeamento do <i>dry powder</i> acumulado, dinâmicas de chamadas de capital com LPs, taxas de distribuição de retornos (DPI/TVPI) e movimentação de sócios.
+              </p>
+            </div>
 
-          {/* 3 Curated Article Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {curatedArticles.map((article) => (
-              <ArticleCard key={article.id} article={article} variant="standard" />
-            ))}
-          </div>
+            <div className="bg-white p-8 rounded-2xl border border-[#1A1210]/10 space-y-3 shadow-sm">
+              <span className="text-xs font-bold text-[#4C0F16] uppercase tracking-wider block">
+                03. Perfis de Founders
+              </span>
+              <h3 className="font-['Plus_Jakarta_Sans'] font-bold text-xl text-[#1A1210]">
+                A Operação Real dos Empreendedores
+              </h3>
+              <p className="text-sm text-[#574F4B] leading-relaxed">
+                Entrevistas aprofundadas com os fundadores à frente de scale-ups brasileiras. O estilo de gestão, a construção do time e os dilemas operacionais do dia a dia.
+              </p>
+            </div>
 
-          <div className="text-center pt-4">
-            <Link
-              href="/noticias"
-              className="inline-flex items-center space-x-2 bg-[#4C0F16] hover:bg-[#3B0B11] text-[#F7F2EC] font-bold text-sm px-8 py-3.5 rounded-xl transition-all shadow-md"
-            >
-              <span>Acessar a Central Completa de Notícias</span>
-              <ArrowRight className="w-4 h-4 text-[#D49B5E]" />
-            </Link>
+            <div className="bg-white p-8 rounded-2xl border border-[#1A1210]/10 space-y-3 shadow-sm">
+              <span className="text-xs font-bold text-[#4C0F16] uppercase tracking-wider block">
+                04. Análises & Investigação
+              </span>
+              <h3 className="font-['Plus_Jakarta_Sans'] font-bold text-xl text-[#1A1210]">
+                Unit Economics e Reestruturações
+              </h3>
+              <p className="text-sm text-[#574F4B] leading-relaxed">
+                Investigações sobre downrounds silenciosos, inadimplência em fintechs B2B e o impacto de oscilações macroeconômicas na sustentabilidade das startups.
+              </p>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* 5. BLOCO "COMO TRABALHAMOS" (Posicionamento Editorial & Voz) */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto w-full space-y-10">
+      {/* 5. SEÇÃO: COMO TRABALHAMOS (#linha-editorial) */}
+      <section id="linha-editorial" className="py-20 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto w-full space-y-10">
         <div className="text-center space-y-3 max-w-2xl mx-auto">
           <span className="text-xs font-bold uppercase tracking-widest text-[#C77B3F]">
             Linha Editorial
@@ -215,7 +279,7 @@ export default function InstitutionalHomePage() {
             Como Trabalhamos
           </h2>
           <p className="text-base text-[#574F4B]">
-            Entenda os pilares jornalísticos que guiam cada apuração do The Round.
+            Entenda os princípios de apuração que guiam cada trabalho do The Round.
           </p>
         </div>
 
@@ -226,22 +290,61 @@ export default function InstitutionalHomePage() {
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 pt-4 text-xs sm:text-sm text-[#574F4B]">
             <div className="space-y-1">
-              <strong className="text-[#1A1210] font-bold block text-base">Fonte Única do Site</strong>
-              <p>Toda matéria é produzida em sua versão integral primeiro no site do The Round antes de gerar pílulas para redes sociais.</p>
+              <strong className="text-[#1A1210] font-bold block text-base">Fonte Única no LinkedIn</strong>
+              <p>O site é a matriz integre das matérias e o LinkedIn é nosso canal primário de pílulas e distribuição direta.</p>
             </div>
             <div className="space-y-1">
               <strong className="text-[#1A1210] font-bold block text-base">Zero Releases Reciclados</strong>
               <p>Nenhum texto é copiado de assessorias. Todas as informações são checadas com fontes operacionais e investidores.</p>
             </div>
             <div className="space-y-1">
-              <strong className="text-[#1A1210] font-bold block text-base">Independência Comercial</strong>
-              <p>Sem conteúdos patrocinados disfarçados de notícia. Nossa única fidelidade é com a precisão dos fatos.</p>
+              <strong className="text-[#1A1210] font-bold block text-base">Transparência Total</strong>
+              <p>Sem conteúdos patrocinados ocultos. Nossa única fidelidade é com a veracidade dos fatos.</p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* 6. CTA DE LINKEDIN (Estilo Destaque Canastra) */}
+      {/* 6. SEÇÃO: EQUIPE REDACIONAL (#equipe) */}
+      <section id="equipe" className="py-20 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto w-full space-y-12">
+        <div className="text-center max-w-2xl mx-auto space-y-2">
+          <span className="text-xs font-bold uppercase tracking-widest text-[#C77B3F]">
+            Redação & Analistas
+          </span>
+          <h2 className="font-['Plus_Jakarta_Sans'] font-extrabold text-3xl sm:text-4xl text-[#1A1210]">
+            Quem Faz o The Round
+          </h2>
+          <p className="text-sm text-[#574F4B]">
+            Jornalistas e analistas com bagagem no mercado financeiro e nas principais redações do país.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {teamMembers.map((member) => (
+            <div
+              key={member.name}
+              className="bg-white rounded-2xl border border-[#1A1210]/10 p-6 text-center space-y-3 hover:shadow-md transition-shadow"
+            >
+              <img
+                src={member.avatar}
+                alt={member.name}
+                className="w-24 h-24 rounded-full object-cover mx-auto border-2 border-[#4C0F16]/20 shadow-sm"
+              />
+              <div>
+                <h4 className="font-['Plus_Jakarta_Sans'] font-bold text-base text-[#1A1210]">
+                  {member.name}
+                </h4>
+                <p className="text-xs text-[#C77B3F] font-semibold mt-0.5">{member.role}</p>
+              </div>
+              <p className="text-xs text-[#574F4B] leading-relaxed pt-2 border-t border-[#1A1210]/5">
+                {member.bio}
+              </p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* 7. CTA DE LINKEDIN (Estilo Destaque Canastra) */}
       <section className="bg-gradient-to-r from-[#4C0F16] to-[#3B0B11] text-[#F7F2EC] py-16 px-4 sm:px-6 lg:px-8 border-t border-b border-[#F7F2EC]/10">
         <div className="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-8">
           <div className="space-y-2 text-center sm:text-left">
@@ -253,7 +356,7 @@ export default function InstitutionalHomePage() {
               Siga o The Round no LinkedIn
             </h3>
             <p className="text-sm text-[#D4C7BB] max-w-xl">
-              Receba os alertas de novas investigações e resumos executivos diretamente no seu feed do LinkedIn.
+              Acompanhe as investigações diárias, resumos executivos e novidades direto no seu feed do LinkedIn.
             </p>
           </div>
 
@@ -270,9 +373,108 @@ export default function InstitutionalHomePage() {
         </div>
       </section>
 
-      {/* 7. NEWSLETTER BLOCK */}
-      <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 w-full">
-        <NewsletterBlock />
+      {/* 8. CAPTURA DE NEWSLETTER (#newsletter) */}
+      <section id="newsletter" className="py-20 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto w-full">
+        <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-[#4C0F16] via-[#3B0B11] to-[#5A1119] text-[#F7F2EC] p-8 sm:p-14 border border-[#F7F2EC]/15 shadow-2xl space-y-8 text-center sm:text-left">
+          <ConcentricArcs opacity={0.16} center="top-right" />
+
+          <div className="relative z-10 space-y-4 max-w-2xl">
+            <div className="inline-flex items-center space-x-2 bg-[#C77B3F]/20 text-[#D49B5E] border border-[#C77B3F]/40 px-3.5 py-1 rounded-full text-xs font-bold uppercase tracking-wider">
+              <Mail className="w-3.5 h-3.5" />
+              <span>Newsletter Exclusiva do The Round</span>
+            </div>
+
+            <h2 className="font-['Plus_Jakarta_Sans'] font-extrabold text-3xl sm:text-5xl text-[#F7F2EC] leading-tight tracking-tight">
+              O briefing que a Faria Lima e os founders leem antes de abrir o mercado.
+            </h2>
+
+            <p className="text-base sm:text-lg text-[#D4C7BB] leading-relaxed">
+              Todas as terças e quintas às 07h00, receba os bastidores de rodadas, movimentações de fundos de VC e análises frias do ecossistema.
+            </p>
+          </div>
+
+          {/* Form */}
+          <div className="relative z-10 pt-2">
+            {submitted ? (
+              <div className="bg-[#5A1119] border border-[#C77B3F] p-6 rounded-2xl max-w-lg flex items-center space-x-3 text-left shadow-lg">
+                <CheckCircle2 className="w-8 h-8 text-[#C77B3F] flex-shrink-0" />
+                <div>
+                  <h4 className="font-bold text-base text-[#F7F2EC]">Inscrição Realizada com Sucesso!</h4>
+                  <p className="text-xs text-[#D4C7BB]">
+                    Você receberá a próxima edição da newsletter do The Round diretamente no seu e-mail.
+                  </p>
+                </div>
+              </div>
+            ) : (
+              <form
+                onSubmit={handleNewsletterSubmit}
+                className="flex flex-col sm:flex-row items-center gap-3 max-w-xl"
+              >
+                <div className="relative w-full">
+                  <input
+                    type="email"
+                    required
+                    placeholder="Digite seu melhor e-mail profissional..."
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="w-full bg-[#3B0B11]/90 text-[#F7F2EC] placeholder-[#D4C7BB]/50 px-4 py-4 rounded-xl border border-[#F7F2EC]/20 focus:outline-none focus:border-[#C77B3F] transition-all text-sm font-medium"
+                  />
+                </div>
+                <button
+                  type="submit"
+                  disabled={loading}
+                  className="w-full sm:w-auto font-['Plus_Jakarta_Sans'] font-bold text-sm text-[#F7F2EC] bg-[#C77B3F] hover:bg-[#B06930] px-8 py-4 rounded-xl transition-all shadow-md flex items-center justify-center space-x-2 flex-shrink-0 disabled:opacity-50"
+                >
+                  <span>{loading ? "Processando..." : "Assinar Agora"}</span>
+                  <ArrowRight className="w-4 h-4" />
+                </button>
+              </form>
+            )}
+          </div>
+
+          <div className="relative z-10 flex flex-wrap items-center gap-6 pt-4 text-xs text-[#D4C7BB]/80 border-t border-[#F7F2EC]/10">
+            <span className="flex items-center space-x-1.5">
+              <ShieldCheck className="w-4 h-4 text-[#C77B3F]" />
+              <span>Sem spam. Cancele quando quiser com 1 clique.</span>
+            </span>
+            <span>•</span>
+            <span className="font-semibold text-[#F7F2EC]">
+              +14.200 leitores inscritos
+            </span>
+          </div>
+        </div>
+      </section>
+
+      {/* 9. CANAL SEGURO DE PAUTAS ANÔNIMAS (#vazamentos) */}
+      <section id="vazamentos" className="py-12 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto w-full">
+        <div className="p-8 sm:p-12 bg-[#4C0F16] text-[#F7F2EC] rounded-3xl relative overflow-hidden border border-[#F7F2EC]/15 shadow-xl">
+          <ConcentricArcs opacity={0.12} center="bottom-left" />
+
+          <div className="relative z-10 grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
+            <div className="md:col-span-8 space-y-4">
+              <div className="inline-flex items-center space-x-2 bg-[#C77B3F]/20 text-[#D49B5E] px-3 py-1 rounded-full text-xs font-bold border border-[#C77B3F]/40">
+                <Lock className="w-3.5 h-3.5" />
+                <span>Canal Seguro & Anônimo</span>
+              </div>
+              <h3 className="font-['Plus_Jakarta_Sans'] font-extrabold text-2xl sm:text-3xl text-[#F7F2EC]">
+                Tem uma pauta, term sheet ou documento confidencial?
+              </h3>
+              <p className="text-sm sm:text-base text-[#D4C7BB] leading-relaxed">
+                Garantimos o sigilo absoluto da fonte jornalística nos termos do Artigo 5º, XIV da Constituição Federal. Sua identidade nunca será divulgada.
+              </p>
+            </div>
+
+            <div className="md:col-span-4 flex flex-col space-y-3">
+              <a
+                href="mailto:pautas@theround.com.br"
+                className="w-full text-center bg-[#C77B3F] hover:bg-[#B06930] text-[#F7F2EC] font-bold text-sm py-3.5 px-4 rounded-xl transition-all shadow-md flex items-center justify-center space-x-2"
+              >
+                <Mail className="w-4 h-4" />
+                <span>pautas@theround.com.br</span>
+              </a>
+            </div>
+          </div>
+        </div>
       </section>
 
       <Footer />
