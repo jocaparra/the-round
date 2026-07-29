@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import Link from "next/link";
 import { Mail, Menu, X, ArrowRight } from "lucide-react";
 import LinkedInIcon from "./LinkedInIcon";
 
@@ -24,8 +23,7 @@ export default function Header() {
   const navLinks = [
     { label: "O Jornal", href: "#sobre" },
     { label: "O Que Cobrimos", href: "#escopo" },
-    { label: "Como Trabalhamos", href: "#linha-editorial" },
-    { label: "Redação", href: "#equipe" },
+    { label: "Linha Editorial", href: "#linha-editorial" },
     { label: "Newsletter", href: "#newsletter" },
   ];
 
@@ -50,8 +48,8 @@ export default function Header() {
             <span className="inline-block w-2 h-2 rounded-full bg-[#C77B3F] group-hover:scale-125 transition-transform" />
           </a>
 
-          {/* Desktop Minimal Anchor Navigation (Canary / Canastra Style) */}
-          <nav className="hidden md:flex items-center space-x-7">
+          {/* Desktop Minimal Anchor Navigation */}
+          <nav className="hidden md:flex items-center space-x-8">
             {navLinks.map((link) => (
               <a
                 key={link.href}
@@ -63,7 +61,7 @@ export default function Header() {
             ))}
           </nav>
 
-          {/* Right: Actions (LinkedIn & Newsletter CTA) */}
+          {/* Right: Actions */}
           <div className="flex items-center space-x-3 sm:space-x-4">
             <a
               href="https://www.linkedin.com"

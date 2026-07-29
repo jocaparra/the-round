@@ -1,5 +1,4 @@
 import React from "react";
-import Link from "next/link";
 import { Mail, ArrowUpRight, Lock } from "lucide-react";
 import ConcentricArcs from "./ConcentricArcs";
 import LinkedInIcon from "./LinkedInIcon";
@@ -35,7 +34,7 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Column 2: Navegação Institucional (2 cols) */}
+          {/* Column 2: Navegação (2 cols) */}
           <div className="md:col-span-2 space-y-3">
             <h4 className="text-xs font-bold uppercase tracking-wider text-[#C77B3F]">
               Navegação
@@ -53,12 +52,7 @@ export default function Footer() {
               </li>
               <li>
                 <a href="#linha-editorial" className="hover:text-[#F7F2EC] transition-colors">
-                  Como Trabalhamos
-                </a>
-              </li>
-              <li>
-                <a href="#equipe" className="hover:text-[#F7F2EC] transition-colors">
-                  Redação
+                  Linha Editorial
                 </a>
               </li>
               <li>
@@ -69,17 +63,12 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Column 3: Redação & Contato (2 cols) */}
+          {/* Column 3: Pautas Anônimas (2 cols) */}
           <div className="md:col-span-2 space-y-3">
             <h4 className="text-xs font-bold uppercase tracking-wider text-[#C77B3F]">
-              Contato
+              Pautas
             </h4>
             <ul className="space-y-2 text-sm text-[#D4C7BB]/80">
-              <li>
-                <a href="mailto:redacao@theround.com.br" className="hover:text-[#F7F2EC] transition-colors">
-                  redacao@theround.com.br
-                </a>
-              </li>
               <li>
                 <a href="mailto:pautas@theround.com.br" className="hover:text-[#F7F2EC] transition-colors">
                   Envie uma Pauta
@@ -103,7 +92,7 @@ export default function Footer() {
               Newsletter
             </h4>
             <p className="text-xs text-[#D4C7BB]/80 leading-relaxed">
-              O briefing quinzenal e semanal que a Faria Lima e os founders leem antes de abrir o mercado.
+              O briefing que a Faria Lima e os founders leem antes de abrir o mercado.
             </p>
             <a
               href="#newsletter"
@@ -118,7 +107,7 @@ export default function Footer() {
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-[#D4C7BB]/50 gap-4">
           <p>© {new Date().getFullYear()} The Round Mídia & Jornalismo Ltda. Todos os direitos reservados.</p>
           <p className="text-center sm:text-right max-w-md">
-            Veículo de jornalismo independente. O The Round não comercializa análises pagas nem possui vínculo de capital com fundos de venture capital.
+            Veículo de jornalismo independente e anônimo. O The Round não comercializa análises pagas nem possui vínculo com fundos de venture capital.
           </p>
         </div>
       </div>
