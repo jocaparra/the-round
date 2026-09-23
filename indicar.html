@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Indicar — The Round Awards</title>
+<meta name="description" content="Indique uma startup, fundo ou pessoa para o The Round Awards, o prêmio anual da The Round.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,340;0,9..144,560;0,9..144,600;1,9..144,340;1,9..144,460&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="premio.css">
+</head>
+<body>
+
+<div class="topbar">
+  <a class="home" href="index.html">THE ROUND<span class="dot" aria-hidden="true"></span></a>
+  <span class="eyebrow">Indicação</span>
+</div>
+
+<div class="back-wrap">
+  <a class="back-link" href="premio.html">← The Round Awards</a>
+</div>
+
+<main class="stage">
+
+  <header class="hero">
+    <h1 class="mark">INDICAR<span class="dot" aria-hidden="true"></span></h1>
+    <p class="tagline">Conte pra gente quem mereceu se destacar este ano. Uma indicação, sua avaliação.</p>
+    <p class="edition">The Round Awards 2026</p>
+  </header>
+
+  <section class="hero-close">
+    <p class="body-text">A indicação é lida pela redação — não é voto público. Pode indicar qualquer startup, fundo ou pessoa do ecossistema brasileiro, inclusive a sua própria empresa.</p>
+  </section>
+
+  <section>
+    <h2 class="label">Formulário</h2>
+
+    <form class="nomination" id="nomination-form" action="https://formspree.io/f/mwlpbayl" method="POST">
+      <input type="hidden" name="_subject" value="Indicação — The Round Awards 2026">
+
+      <!-- honeypot anti-spam: fica invisível para pessoas, bots costumam preencher -->
+      <div class="field field-honeypot" aria-hidden="true">
+        <label for="empresa">Não preencha este campo</label>
+        <input type="text" id="empresa" name="_gotcha" tabindex="-1" autocomplete="off">
+      </div>
+
+      <div class="field">
+        <label for="categoria">Categoria</label>
+        <select id="categoria" name="Categoria" required>
+          <option value="" disabled selected>Selecione uma categoria</option>
+          <option>Startup do Ano</option>
+          <option>Founder do Ano</option>
+          <option>Fundo do Ano</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="indicado">Quem você está indicando</label>
+        <input type="text" id="indicado" name="Indicado" required placeholder="Nome da startup, fundo ou pessoa">
+      </div>
+
+      <div class="field">
+        <label for="link">Site ou link (opcional)</label>
+        <input type="url" id="link" name="Link" placeholder="https://">
+      </div>
+
+      <div class="field">
+        <label for="justificativa">Por que essa indicação</label>
+        <textarea id="justificativa" name="Justificativa" required minlength="20" maxlength="600" placeholder="O que essa startup, fundo ou pessoa fez que merece reconhecimento este ano?"></textarea>
+        <span class="counter" id="contador">0 / 600</span>
+      </div>
+
+      <div class="field">
+        <label for="seu-nome">Seu nome</label>
+        <input type="text" id="seu-nome" name="Nome do indicador" required>
+      </div>
+
+      <div class="field">
+        <label for="seu-email">Seu email</label>
+        <input type="email" id="seu-email" name="Email do indicador" required>
+        <span class="hint">Só usamos para confirmar a indicação, se precisar.</span>
+      </div>
+
+      <div class="checkbox-field">
+        <input type="checkbox" id="confirmo" name="Confirmação" value="Confirmado" required>
+        <label for="confirmo">Confirmo que as informações acima são verdadeiras, até onde sei.</label>
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" class="submit">Enviar indicação</button>
+        <p class="form-status" id="form-status" role="status" hidden></p>
+      </div>
+    </form>
+  </section>
+
+</main>
+
+<footer class="page-footer">
+  <p>Prefere mandar por email?</p>
+  <a class="mail" href="mailto:oi@theround.com.br?subject=Indicação The Round Awards">oi@theround.com.br</a>
+</footer>
+
+<script>
+(function () {
+  var textarea = document.getElementById('justificativa');
+  var counter = document.getElementById('contador');
+  if (textarea && counter) {
+    var updateCounter = function () {
+      counter.textContent = textarea.value.length + ' / 600';
+    };
+    textarea.addEventListener('input', updateCounter);
+    updateCounter();
+  }
+
+  var form = document.getElementById('nomination-form');
+  var status = document.getElementById('form-status');
+  if (!form || !status) return;
+
+  form.addEventListener('submit', function (event) {
+    event.preventDefault();
+    var button = form.querySelector('button[type="submit"]');
+    button.disabled = true;
+    button.textContent = 'Enviando…';
+
+    fetch(form.action, {
+      method: 'POST',
+      body: new FormData(form),
+      headers: { Accept: 'application/json' }
+    })
+      .then(function (response) {
+        if (response.ok) {
+          form.hidden = true;
+          status.hidden = false;
+          status.className = 'form-status success';
+          status.textContent = 'Indicação enviada. Obrigado — vamos avaliar com carinho.';
+        } else {
+          return response.json().then(function (data) {
+            var message = (data && data.errors)
+              ? data.errors.map(function (e) { return e.message; }).join(', ')
+              : 'Não foi possível enviar.';
+            throw new Error(message);
+          });
+        }
+      })
+      .catch(function () {
+        status.hidden = false;
+        status.className = 'form-status error';
+        status.textContent = 'Não foi possível enviar. Tente de novo ou escreva pra oi@theround.com.br.';
+        button.disabled = false;
+        button.textContent = 'Enviar indicação';
+      });
+  });
+})();
+</script>
+
+</body>
+</html>

@@ -125,6 +125,35 @@
     border-color: var(--accent);
   }
 
+  .award-banner {
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: clamp(1.25rem, 4vh, 2.5rem);
+    text-align: center;
+    opacity: 0;
+    animation: settle 900ms ease-out 820ms forwards;
+  }
+
+  .award-banner a {
+    font-family: "Fraunces", Georgia, serif;
+    font-size: 0.72rem;
+    font-weight: 560;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    padding-bottom: 0.15em;
+    transition: color 220ms ease, border-color 220ms ease;
+  }
+
+  .award-banner a:hover,
+  .award-banner a:focus-visible {
+    color: var(--accent);
+    border-color: var(--accent);
+  }
+
   a:focus-visible {
     outline: 1px solid var(--accent);
     outline-offset: 3px;
@@ -159,6 +188,10 @@
 </style>
 </head>
 <body>
+
+<div class="award-banner">
+  <a href="premio.html">The Round Awards</a>
+</div>
 
 <main class="stage">
   <h1 class="mark">THE ROUND<span class="dot" aria-hidden="true"></span></h1>
